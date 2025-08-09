@@ -1,0 +1,4 @@
+<svg width="800" height="800" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+  <!-- diamond made from four points: top, right, bottom, left -->
+  <polygon points="8,1 15,8 8,15 1,8" fill="#000000"></polygon>
+</svg>

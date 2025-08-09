@@ -12,6 +12,11 @@ body {
     gap: 30px;
 }
 
+.button-grid img {
+    height: 50px;
+    width: 50px;
+}
+
 .button-grid button {
     font-size: 3rem;
     width: 100px;
