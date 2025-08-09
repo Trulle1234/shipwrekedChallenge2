@@ -102,6 +102,7 @@ document.querySelectorAll(".button-grid button").forEach(button => {
 
         if (fileName === "hash") {
             if (onHold) stopHoldAudio();
+            stopVillagerAudio();
             playSound("hash");
             return;
         }
