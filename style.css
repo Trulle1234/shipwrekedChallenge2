@@ -31,15 +31,20 @@ body {
     color: #e5e5e5;
 }
 
-.button-grid .special-btn {
+.special-btn {
     background-color: #cecece;
 }
 
-.button-grid .special-btn img {
+.special-btn img {
     height: 40px;
     width: 40px;
 }
 
-.button-grid .call-btn {
+.call-btn {
     background-color: #4bd867;
+}
+
+.in-call {
+    background-color: #fe3a30;
+    transform: rotate(135deg);
 }
