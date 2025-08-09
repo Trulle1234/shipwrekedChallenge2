@@ -43,6 +43,7 @@ function stopVillagerAudio() {
         villagerAudio.pause();
         villagerAudio.currentTime = 0;
         villagerAudio = null;
+        console.log("Villager audio stopped");
     }
 }
 
@@ -95,7 +96,6 @@ document.querySelectorAll(".button-grid button").forEach(button => {
             } else {
                 stopHoldAudio();
                 villagerAudio = playMusic(sound.get("triangle"));
-                playSound("triangle");
             }
             return;
         }
