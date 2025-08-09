@@ -1,7 +1,9 @@
+let inCall = false
 const sound = new Map([
     ["beep", "sound/sfx/beep.wav"],
     ["phone", "sound/lines/hello.wav"],
     ["square", "sound/lines/info.wav"],
+    ["hash", "sound/lines/main.wav"]
 ]);
 
 function playSound(key) {
@@ -22,9 +24,15 @@ buttons.forEach(button => {
     button.addEventListener("click", () => {
         playSound("beep")
         const img = button.querySelector("img");
-        if (img && img.src) {
+        
+        if (img && img.src && inCall) {
             const fileName = img.src.split('/').pop().replace('.svg', '');
-            playSound(fileName);''
-        }''
+            playSound(fileName);
+            if (fileName === "phone") {
+                inCall = !inCall;
+                console.log(inCall);
+            }
+            playSound(fileName);
+        }
     });
 });
