@@ -26,8 +26,16 @@ body {
     align-items: center;
     cursor: pointer;
     border-radius: 100%;
+    border: none;
+    outline: none;
+    color: #e5e5e5;
 }
 
 .button-grid .special-btn {
-    background-color: gray;
+    background-color: #cecece;
+}
+
+.button-grid .special-btn img {
+    height: 40px;
+    width: 40px;
 }
