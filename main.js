@@ -10,6 +10,7 @@ const sound = new Map([
     ["hash", "sound/lines/main.wav"],
     ["circle", "sound/lines/hold.wav"],
     ["triangle", "sound/sfx/villager.wav"],
+    ["star", "sound/lines/star.wav"]
 ]);
 
 function playSound(key, loop = false) {
