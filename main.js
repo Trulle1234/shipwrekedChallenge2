@@ -9,7 +9,7 @@ const sound = new Map([
     ["square", "sound/lines/info.wav"],
     ["hash", "sound/lines/main.wav"],
     ["circle", "sound/lines/hold.wav"],
-    ["triangle", "sound/sfx/villager.wav"],
+    ["triangle", "sound/sfx/villager.mp3"],
     ["star", "sound/lines/star.wav"]
 ]);
 
