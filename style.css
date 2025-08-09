@@ -1,0 +1,28 @@
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 100px); /* bigger column width */
+    gap: 30px;
+}
+
+.button-grid button {
+    font-size: 3rem;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 100%;
+}
+
+.button-grid .special-btn {
+    background-color: gray;
+}
