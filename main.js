@@ -1,6 +1,7 @@
 let inCall = false;
 let onHold = false;
 let holdAudio = null;
+let villagerAudio = null;
 
 const sound = new Map([
     ["beep", "sound/sfx/beep.wav"],
@@ -8,75 +9,104 @@ const sound = new Map([
     ["square", "sound/lines/info.wav"],
     ["hash", "sound/lines/main.wav"],
     ["circle", "sound/lines/hold.wav"],
+    ["triangle", "sound/sfx/villager.wav"],
 ]);
 
 function playSound(key, loop = false) {
     const audioUrl = sound.get(key);
-    if (!audioUrl) {
-        console.warn(`No audio found for key: ${key}`);
-        return null;
-    }
+    if (!audioUrl) return null;
     const audio = new Audio(audioUrl);
     audio.loop = loop;
-    audio.play().catch(err => {
-        console.error("Audio play failed:", err);
-    });
+    audio.play().catch(() => {});
     return audio;
 }
 
-function playHoldMusic() {
-    const audio = new Audio("sound/music/hold.wav");
+function playMusic(path) {
+    if (!path) return null;
+    const audio = new Audio(path);
     audio.loop = true;
-    audio.play().catch(err => {
-        console.error("Hold music failed:", err);
-    });
+    audio.play().catch(() => {});
     return audio;
+}
+
+function stopHoldAudio() {
+    if (holdAudio) {
+        holdAudio.pause();
+        holdAudio.currentTime = 0;
+        holdAudio = null;
+    }
+    onHold = false;
+}
+
+function stopVillagerAudio() {
+    if (villagerAudio) {
+        villagerAudio.pause();
+        villagerAudio.currentTime = 0;
+        villagerAudio = null;
+    }
+}
+
+function stopAllAudio() {
+    stopHoldAudio();
+    stopVillagerAudio();
 }
 
 document.querySelectorAll(".button-grid button").forEach(button => {
     button.addEventListener("click", () => {
-        playSound("beep");
-
         const img = button.querySelector("img");
         if (!img || !img.src) return;
+        const src = img.src.split('?')[0];
+        const fileName = src.substring(src.lastIndexOf('/') + 1).replace(/\.[^/.]+$/, '');
 
-        const fileName = img.src.split('/').pop().replace('.svg', '');
+        if (fileName !== "triangle") stopVillagerAudio();
+
+        playSound("beep");
 
         if (fileName === "phone") {
-            inCall = !inCall;
-            document.querySelector(".call-btn")?.classList.toggle("in-call");
-
-            // Stop hold if hanging up
-            if (!inCall && holdAudio) {
-                holdAudio.pause();
-                holdAudio = null;
-                onHold = false;
+            if (inCall) {
+                stopAllAudio();
+                inCall = false;
+                document.querySelector(".call-btn")?.classList.remove("in-call");
+            } else {
+                inCall = true;
+                document.querySelector(".call-btn")?.classList.add("in-call");
+                playSound("phone");
             }
+            return;
+        }
 
-            if (inCall) playSound(fileName);
+        if (!inCall) return;
 
-        } else if (fileName === "circle") {
+        if (fileName === "circle") {
+            if (onHold) {
+                stopHoldAudio();
+            } else {
+                stopVillagerAudio();
+                holdAudio = playMusic("sound/music/hold.wav");
+                playSound("circle");
+            }
             onHold = !onHold;
+            return;
+        }
 
-            if (onHold) {
-                playSound(fileName);
-                holdAudio = playHoldMusic();
-            } else if (holdAudio) {
-                holdAudio.pause();
-                holdAudio = null;
+        if (fileName === "triangle") {
+            if (villagerAudio) {
+                stopVillagerAudio();
+            } else {
+                stopHoldAudio();
+                villagerAudio = playMusic(sound.get("triangle"));
+                playSound("triangle");
             }
+            return;
+        }
 
-        } else if (fileName === "hash") {
-            if (onHold) {
-                onHold = false;
-                if (holdAudio) {
-                    holdAudio.pause();
-                    holdAudio = null;
-                }
-            }
-            playSound(fileName);
+        if (fileName === "hash") {
+            if (onHold) stopHoldAudio();
+            playSound("hash");
+            return;
+        }
 
-        } else if (inCall && !onHold) {
+        if (inCall && !onHold) {
             playSound(fileName);
         }
     });
