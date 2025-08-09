@@ -19,8 +19,8 @@ body {
 
 .button-grid button {
     font-size: 3rem;
-    width: 100px;
-    height: 100px;
+    width: 90px;
+    height: 90px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -38,4 +38,8 @@ body {
 .button-grid .special-btn img {
     height: 40px;
     width: 40px;
+}
+
+.button-grid .call-btn {
+    background-color: #4bd867;
 }
